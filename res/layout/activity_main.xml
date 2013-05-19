@@ -9,18 +9,29 @@
     tools:context=".MainActivity" >
 
     <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvStatus"
+        android:layout_alignParentTop="true"
+        android:text="GPS" />
+
+    <TextView
         android:id="@+id/tvStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="17dp"
         android:text="@string/hello_world" />
 
     <TextView
         android:id="@+id/tvLat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvStatus"
+        android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvStatus"
-        android:layout_marginTop="46dp"
+        android:layout_marginLeft="17dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
@@ -28,9 +39,45 @@
         android:id="@+id/tvLng"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tvStatus"
-        android:layout_below="@+id/tvStatus"
-        android:layout_marginTop="22dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvLat"
+        android:layout_marginLeft="17dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLng"
+        android:layout_below="@+id/tvLng"
+        android:layout_marginTop="25dp"
+        android:text="Accelerometer" />
+
+    <TextView
+        android:id="@+id/tvX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLng"
+        android:layout_below="@+id/textView2"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvY"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLng"
+        android:layout_below="@+id/tvX"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvZ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvLng"
+        android:layout_below="@+id/tvY"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

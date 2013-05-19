@@ -29,6 +29,7 @@ public class MainActivity extends Activity implements LocationListener{
 		setContentView(R.layout.activity_main);
 		
 		//variabel-variabel tempat textarea 
+		
 		tvStatus = (TextView) findViewById(R.id.tvStatus);
 		tvLat = (TextView) findViewById(R.id.tvLat);
 		tvLng = (TextView) findViewById(R.id.tvLng);
