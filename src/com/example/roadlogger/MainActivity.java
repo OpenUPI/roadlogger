@@ -1,38 +1,49 @@
 package com.example.roadlogger;
 
+import android.app.Activity;
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.app.Activity;
-import android.content.Context;
 import android.text.format.Time;
 import android.view.Menu;
 import android.widget.TextView;
 
-public class MainActivity extends Activity implements LocationListener{
+public class MainActivity extends Activity implements LocationListener, SensorEventListener{
 
 	TextView tvLat;
 	TextView tvLng;
 	TextView tvStatus;
+	TextView tvX;
+	TextView tvY;
+	TextView tvZ;
 	double lat;
 	double lng;
 	long minTime;
 	float minDistance;
 	String locProvider;
 	LocationManager locMgr;
+	private SensorManager mSensorManager;
+	private Sensor mSensor;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		//variabel-variabel tempat textarea 
-		
+		//variabel-variabel tempat textarea 		
 		tvStatus = (TextView) findViewById(R.id.tvStatus);
 		tvLat = (TextView) findViewById(R.id.tvLat);
 		tvLng = (TextView) findViewById(R.id.tvLng);
+		tvX = (TextView) findViewById(R.id.tvX);
+		tvY = (TextView) findViewById(R.id.tvY);
+		tvZ = (TextView) findViewById(R.id.tvZ);
 		
 		locMgr = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		
@@ -54,6 +65,17 @@ public class MainActivity extends Activity implements LocationListener{
 		minTime = 5 * 1000;
 		
 		minDistance = 1;
+		
+		//sensor accelerometer
+		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);  
+		if (mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null){			
+    		//device memiliki accelerometer,lanjutkan		   
+			mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);	
+	        mSensorManager.registerListener(this, mSensor, 
+	    		                         SensorManager.SENSOR_DELAY_NORMAL);
+		}else {
+		  //tidak punya sensor accelerometer, tampilkan pesan error
+		}
 	}
 
 	@Override
@@ -102,6 +124,7 @@ public class MainActivity extends Activity implements LocationListener{
 		// TODO Auto-generated method stub
 		super.onResume();
 		locMgr.requestLocationUpdates(locProvider, minTime, minDistance, this);
+	    mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	
 	@Override
@@ -109,6 +132,29 @@ public class MainActivity extends Activity implements LocationListener{
 		// TODO Auto-generated method stub
 		super.onPause();
 		locMgr.removeUpdates(this);
+	    mSensorManager.unregisterListener(this);
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		double ax=0,ay=0,az=0;
+		// menangkap perubahan nilai sensor
+		
+		//if (event.sensor.getType()==Sensor.TYPE_ACCELEROMETER){
+		if (event.sensor.getType()==Sensor.TYPE_ACCELEROMETER) {
+	            ax=event.values[0];
+	            ay=event.values[1];
+	            az=event.values[2];
+	    }		
+		tvX.setText("x : "+ax);
+		tvY.setText("y : "+ay);
+		tvZ.setText("z : "+az);
 	}
 	
 }
