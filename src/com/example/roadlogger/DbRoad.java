@@ -1,5 +1,7 @@
 package com.example.roadlogger;
 
+import java.util.Vector;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -70,6 +72,47 @@ public class DbRoad{
 		}
 		
 		return R;
+	}
+	
+	public Vector<Road> getAllRoad(){
+		Cursor cur = null;
+		
+		//Vector Road yang akan dilemparkan hasil kembalian
+		Vector<Road> VecR= new Vector<Road>();
+		
+		String[] COLS = new String[] {"ID", "LATITUDE", "LONGI", "NILAI_X", "NILAI_Y", "NILAI_Z", "WAKTU"};
+		
+		cur = db.query("ROADLOGGER", COLS, null, null, null, null, null);
+		if(cur.getCount() > 0){
+			
+			//mendapatkan jumlah baris yang mau ditampilkan
+			int jumlahBaris = cur.getCount();
+			
+			//posisikan cursor di paling atas jika punya banyak
+			//baris agar bisa mengambil data dari pertama sampai akhir
+			if (jumlahBaris > 0) {
+				cur.moveToFirst();
+			}
+			
+			for (int i = 0; i < jumlahBaris; i++) {
+				
+				Road R = new Road();
+				R.id = cur.getInt(0);
+				R.latitude = cur.getFloat(1);
+				R.longi = cur.getFloat(2);
+				R.nilai_x = cur.getFloat(3);
+				R.nilai_y = cur.getFloat(4);
+				R.nilai_z = cur.getFloat(5);
+				R.waktu = cur.getString(6);
+				
+				//masukkan objek iterasi ini ke dalam vector
+				VecR.add(R);
+				
+				//pindah ke baris berikutnya
+				cur.moveToNext();
+			}		
+		}
+		return VecR;
 	}
 	
 	public void update(int id, float latitude , float longi, float nilai_x,  float nilai_y,  float nilai_z,  String waktu){
