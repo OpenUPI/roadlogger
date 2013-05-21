@@ -12,12 +12,11 @@ public class DbRoad{
 	public static class Road{
 		public int id;
 		public String waktu;
-		public float latitude;
-		public float longi;
-		public float nilai_x;
-		public float nilai_y;
-		public float nilai_z;
-			
+		public String latitude;
+		public String longi;
+		public String nilai_x;
+		public String nilai_y;
+		public String nilai_z;		
 	}
 	
 	private SQLiteDatabase db;
@@ -39,7 +38,7 @@ public class DbRoad{
 		db.close();
 	}
 	
-	public long insert(String waktu, float latitude, float longi,  float nilai_x,  float nilai_y,  float nilai_z){
+	public long insert(String waktu, String latitude, String longi,  String nilai_x,  String nilai_y,  String nilai_z){
 		ContentValues newValues = new ContentValues();
 		newValues.put("LATITUDE", latitude);
 		newValues.put("LONGI", longi);
@@ -62,11 +61,11 @@ public class DbRoad{
 		if(cur.getCount() > 0){
 			cur.moveToFirst();
 			R.id = cur.getInt(0);
-			R.latitude = cur.getFloat(1);
-			R.longi = cur.getFloat(2);
-			R.nilai_x = cur.getFloat(3);
-			R.nilai_y = cur.getFloat(4);
-			R.nilai_z = cur.getFloat(5);
+			R.latitude = cur.getString(1);
+			R.longi = cur.getString(2);
+			R.nilai_x = cur.getString(3);
+			R.nilai_y = cur.getString(4);
+			R.nilai_z = cur.getString(5);
 			R.waktu = cur.getString(6);
 		
 		}
@@ -98,11 +97,11 @@ public class DbRoad{
 				
 				Road R = new Road();
 				R.id = cur.getInt(0);
-				R.latitude = cur.getFloat(1);
-				R.longi = cur.getFloat(2);
-				R.nilai_x = cur.getFloat(3);
-				R.nilai_y = cur.getFloat(4);
-				R.nilai_z = cur.getFloat(5);
+				R.latitude = cur.getString(1);
+				R.longi = cur.getString(2);
+				R.nilai_x = cur.getString(3);
+				R.nilai_y = cur.getString(4);
+				R.nilai_z = cur.getString(5);
 				R.waktu = cur.getString(6);
 				
 				//masukkan objek iterasi ini ke dalam vector
@@ -115,7 +114,7 @@ public class DbRoad{
 		return VecR;
 	}
 	
-	public void update(int id, float latitude , float longi, float nilai_x,  float nilai_y,  float nilai_z,  String waktu){
+	public void update(int id, String latitude , String longi, String nilai_x,  String nilai_y,  String nilai_z,  String waktu){
 		ContentValues newValues = new ContentValues();
 		newValues.put("ID", id);
 		newValues.put("LATITUDE", latitude);
