@@ -81,4 +81,15 @@
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <TextView
+        android:id="@+id/cek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvZ"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="57dp"
+        android:layout_toRightOf="@+id/tvZ"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
 </RelativeLayout>

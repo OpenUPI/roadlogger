@@ -29,8 +29,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	TextView tvX;
 	TextView tvY;
 	TextView tvZ;
-	TextView coba;
-	TextView coba1;
+	TextView cek;
 	double lat;
 	double lng;
 	long minTime;
@@ -86,7 +85,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 		}
 		
 		
-		
+		timer5s();
 	}
 
 	@Override
@@ -189,7 +188,9 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	                        	Time now = new Time();
 	                    		now.setToNow();
 	                    		String a = ("" + now.hour);
+	                    		String b = ("" + now.second);
 	                        	db.insert(a, tvLat.toString(), tvLng.toString(), tvX.toString(), tvY.toString(), tvZ.toString());                        	
+	                        	cek.setText(b);
 	                        }
 	                    });
 	                } catch (Exception e) {
