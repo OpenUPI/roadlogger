@@ -2,6 +2,8 @@ package com.example.roadlogger;
 
 import java.util.Vector;
 
+import com.example.roadlogger.DbRoad.Road;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,7 +18,7 @@ public class DbRoad{
 		public String longi;
 		public String nilai_x;
 		public String nilai_y;
-		public String nilai_z;		
+		public String nilai_z;
 	}
 	
 	private SQLiteDatabase db;

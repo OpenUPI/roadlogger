@@ -201,6 +201,29 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	    }).start();
 	}
 	
-	
-	
+	public void cek()
+	{
+		final DbRoad db = new DbRoad(this);
+		db.open();
+		Vector<Road> VecR= new Vector<Road>();
+		VecR = db.getAllRoad();
+		
+		String kata="";
+		for(int a=0;a<VecR.size();a++)
+		{
+			Road x = (Road)(VecR.elementAt(a));
+			String waktu = x.waktu.toString();
+			String lat = x.latitude.toString();
+			String lan = x.longi.toString();
+			String nx = x.nilai_x.toString();
+			String ny = x.nilai_y.toString();
+			String nz = x.nilai_z.toString();
+			
+			kata += waktu + "," + lat + "," + lan + "," + nx + "," + ny + "," + nz + "\n";
+			
+		}
+		
+		FileDumper fd = new FileDumper(this, "fileAku.txt");
+		fd.printToFile(kata);
+	}
 }
