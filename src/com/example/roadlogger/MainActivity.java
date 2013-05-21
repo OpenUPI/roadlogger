@@ -48,7 +48,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 		locMgr = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		
 		
-		tvStatus.setText("ambil lokasi terakhir berdasarkan network");
+		tvStatus.setText("ambil lokasi terakhir berdasarkan network. Jangan jalan dulu, jalan baru kalau ketemu GPS");
 		locProvider = LocationManager.NETWORK_PROVIDER;
 		Location lastKnownLocation = locMgr.getLastKnownLocation(locProvider);
 		
