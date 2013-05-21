@@ -1,5 +1,10 @@
 package com.example.roadlogger;
 
+import java.util.Timer;
+import java.util.Vector;
+
+import com.example.roadlogger.DbRoad.Road;
+
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
@@ -11,6 +16,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.format.Time;
 import android.view.Menu;
 import android.widget.TextView;
@@ -23,6 +29,8 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	TextView tvX;
 	TextView tvY;
 	TextView tvZ;
+	TextView coba;
+	TextView coba1;
 	double lat;
 	double lng;
 	long minTime;
@@ -31,6 +39,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	LocationManager locMgr;
 	private SensorManager mSensorManager;
 	private Sensor mSensor;
+	Handler mHandler = new Handler();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +55,6 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 		tvZ = (TextView) findViewById(R.id.tvZ);
 		
 		locMgr = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-		
 		
 		tvStatus.setText("ambil lokasi terakhir berdasarkan network. Jangan jalan dulu, jalan baru kalau ketemu GPS");
 		locProvider = LocationManager.NETWORK_PROVIDER;
@@ -76,6 +84,9 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 		}else {
 		  //tidak punya sensor accelerometer, tampilkan pesan error
 		}
+		
+		
+		
 	}
 
 	@Override
@@ -156,5 +167,39 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 		tvY.setText("y : "+ay);
 		tvZ.setText("z : "+az);
 	}
+
+	
+	public void timer5s()
+	{
+		final DbRoad db = new DbRoad(this);
+		db.open();
+		new Thread(new Runnable() {
+	        @Override
+	        public void run() {
+	            // TODO Auto-generated method stub
+	            while (true) {
+	                try {
+	                    Thread.sleep(10000);
+	                    mHandler.post(new Runnable() {
+
+	                        @Override
+	                        public void run() {
+	                            // TODO Auto-generated method stub
+	                            // Write your code here to update the UI.
+	                        	Time now = new Time();
+	                    		now.setToNow();
+	                    		String a = ("" + now.hour);
+	                        	db.insert(a, tvLat.toString(), tvLng.toString(), tvX.toString(), tvY.toString(), tvZ.toString());                        	
+	                        }
+	                    });
+	                } catch (Exception e) {
+	                    // TODO: handle exception
+	                }
+	            }
+	        }
+	    }).start();
+	}
+	
+	
 	
 }
