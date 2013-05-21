@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.Time;
 import android.view.Menu;
+import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends Activity implements LocationListener, SensorEventListener{
@@ -29,7 +30,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	TextView tvX;
 	TextView tvY;
 	TextView tvZ;
-	TextView cek;
+	TextView tvCek;
 	double lat;
 	double lng;
 	long minTime;
@@ -52,6 +53,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 		tvX = (TextView) findViewById(R.id.tvX);
 		tvY = (TextView) findViewById(R.id.tvY);
 		tvZ = (TextView) findViewById(R.id.tvZ);
+		tvCek = (TextView) findViewById(R.id.cek);
 		
 		locMgr = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
 		
@@ -162,9 +164,9 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	            ay=event.values[1];
 	            az=event.values[2];
 	    }		
-		tvX.setText("x : "+ax);
-		tvY.setText("y : "+ay);
-		tvZ.setText("z : "+az);
+		tvX.setText(String.valueOf(ax));
+		tvY.setText(String.valueOf(ay));
+		tvZ.setText(String.valueOf(az));
 	}
 
 	
@@ -178,7 +180,7 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	            // TODO Auto-generated method stub
 	            while (true) {
 	                try {
-	                    Thread.sleep(10000);
+	                    Thread.sleep(2000);
 	                    mHandler.post(new Runnable() {
 
 	                        @Override
@@ -187,10 +189,13 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	                            // Write your code here to update the UI.
 	                        	Time now = new Time();
 	                    		now.setToNow();
-	                    		String a = ("" + now.hour);
-	                    		String b = ("" + now.second);
-	                        	db.insert(a, tvLat.toString(), tvLng.toString(), tvX.toString(), tvY.toString(), tvZ.toString());                        	
-	                        	cek.setText(b);
+	                    		String h = String.valueOf(now.hour);
+	                    		String m = String.valueOf(now.minute);
+	                    		String s = String.valueOf(now.second);
+	                    		String time = h + ":"+  m + ":"+  s;
+	                    		
+	                        	db.insert(time, tvLat.getText().toString(), tvLng.getText().toString(), tvX.getText().toString(), tvY.getText().toString(), tvZ.getText().toString());                        	
+	                        	tvCek.setText(time);
 	                        }
 	                    });
 	                } catch (Exception e) {
@@ -201,9 +206,9 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 	    }).start();
 	}
 	
-	public void cek()
+	public void cek(View v)
 	{
-		final DbRoad db = new DbRoad(this);
+		DbRoad db = new DbRoad(this);
 		db.open();
 		Vector<Road> VecR= new Vector<Road>();
 		VecR = db.getAllRoad();
@@ -213,17 +218,24 @@ public class MainActivity extends Activity implements LocationListener, SensorEv
 		{
 			Road x = (Road)(VecR.elementAt(a));
 			String waktu = x.waktu.toString();
+			String id = String.valueOf(x.id);
 			String lat = x.latitude.toString();
 			String lan = x.longi.toString();
 			String nx = x.nilai_x.toString();
 			String ny = x.nilai_y.toString();
 			String nz = x.nilai_z.toString();
 			
-			kata += waktu + "," + lat + "," + lan + "," + nx + "," + ny + "," + nz + "\n";
+			kata += id+ "," + waktu + "," + lat + "," + lan + "," + nx + "," + ny + "," + nz + "\n";
 			
 		}
 		
 		FileDumper fd = new FileDumper(this, "fileAku.txt");
 		fd.printToFile(kata);
+	}
+	
+	public void hapusTable(View v){
+		DbRoad db = new DbRoad(this);
+		db.open();
+		db.hapusTable();
 	}
 }

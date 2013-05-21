@@ -51,7 +51,7 @@ public class FileDumper {
 	}
 	
 	public void printToFile(String barisInput){
-		String namaFileOutput = Environment.getExternalStorageDirectory()+this.namaFile;
+		String namaFileOutput = Environment.getExternalStorageDirectory()+"/"+this.namaFile;
 		
 		try {
 			PrintWriter pw = new PrintWriter(namaFileOutput);
@@ -59,7 +59,7 @@ public class FileDumper {
 			pw.close();
 			
 			AlertDialog dialog = new AlertDialog.Builder(this.activityInduk).create();
-			dialog.setMessage("Data selesai ditulis");
+			dialog.setMessage("Data selesai ditulis di" + namaFileOutput);
 			dialog.show();
 		}catch (FileNotFoundException e){
 			e.printStackTrace();

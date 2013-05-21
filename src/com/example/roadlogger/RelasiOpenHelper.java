@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class RelasiOpenHelper extends SQLiteOpenHelper {
 	
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	private static final String DATABASE_NAME = "dbRoadLogger";
-	private static final String TABLE_CREATE_1 = "CREATE TABLE DATA_ROADLOGGER (ID INTEGER PRIMARY KEY AUTOINCREMENT," + 
+	protected static final String TABLE_CREATE_1 = "CREATE TABLE DATA_ROADLOGGER (ID INTEGER PRIMARY KEY AUTOINCREMENT," + 
 				"LATITUDE FLOAT, LONGI TEXT, NILAI_X FLOAT, NILAI_Y FLOAT, NILAI_Z FLOAT, WAKTU STRING);";
 	
 	
@@ -20,13 +20,14 @@ public class RelasiOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(TABLE_CREATE_1);
-
 	}
+	
+	
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVer, int newVer) {
 		
-		db.execSQL("DROP TABLE IF EXISTS RELASI");
+		db.execSQL("DROP TABLE IF EXISTS DATA_ROADLOGGER");
 		onCreate(db);
 	}
 

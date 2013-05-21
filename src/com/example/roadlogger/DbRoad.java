@@ -40,6 +40,12 @@ public class DbRoad{
 		db.close();
 	}
 	
+	public void hapusTable(){
+		db.execSQL("DROP TABLE IF EXISTS DATA_ROADLOGGER");
+		db.execSQL("CREATE TABLE DATA_ROADLOGGER (ID INTEGER PRIMARY KEY AUTOINCREMENT," + 
+				"LATITUDE FLOAT, LONGI TEXT, NILAI_X FLOAT, NILAI_Y FLOAT, NILAI_Z FLOAT, WAKTU STRING);");
+	}
+	
 	public long insert(String waktu, String latitude, String longi,  String nilai_x,  String nilai_y,  String nilai_z){
 		ContentValues newValues = new ContentValues();
 		newValues.put("LATITUDE", latitude);
@@ -49,7 +55,7 @@ public class DbRoad{
 		newValues.put("NILAI_Z", nilai_z);
 		newValues.put("WAKTU", waktu);
 		
-		return db.insert("ROADLOGGER", null, newValues);
+		return db.insert("DATA_ROADLOGGER", null, newValues);
 	}
 	
 	
@@ -59,7 +65,7 @@ public class DbRoad{
 
 		String[] COLS = new String[] {"ID", "LATITUDE", "LONGI", "NILAI_X", "NILAI_Y", "NILAI_Z", "WAKTU"};
 		
-		cur = db.query("ROADLOGGER", COLS, null, null, null, null, null);
+		cur = db.query("DATA_ROADLOGGER", COLS, null, null, null, null, null);
 		if(cur.getCount() > 0){
 			cur.moveToFirst();
 			R.id = cur.getInt(0);
@@ -83,7 +89,7 @@ public class DbRoad{
 		
 		String[] COLS = new String[] {"ID", "LATITUDE", "LONGI", "NILAI_X", "NILAI_Y", "NILAI_Z", "WAKTU"};
 		
-		cur = db.query("ROADLOGGER", COLS, null, null, null, null, null);
+		cur = db.query("DATA_ROADLOGGER", COLS, null, null, null, null, null);
 		if(cur.getCount() > 0){
 			
 			//mendapatkan jumlah baris yang mau ditampilkan
@@ -126,10 +132,10 @@ public class DbRoad{
 		newValues.put("NILAI_Z", nilai_z);
 		newValues.put("WAKTU", waktu);
 		
-		db.update("ROADLOGGER", newValues, "ID = " +id, null);
+		db.update("DATA_ROADLOGGER", newValues, "ID = " +id, null);
 	}
 	
 	public void delete(int id){
-		db.delete("ROADLOGGER", "ID = " +id, null);
+		db.delete("DATA_ROADLOGGER", "ID = " +id, null);
 	}
 }
